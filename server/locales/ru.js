@@ -40,6 +40,7 @@ export default {
         id: 'ID',
         email: 'Email',
         createdAt: 'Дата создания',
+        fullName: 'Полное имя',
         new: {
           submit: 'Сохранить',
           signUp: 'Регистрация',
