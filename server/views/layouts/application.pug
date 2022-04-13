@@ -8,7 +8,7 @@ html(lang="en")
     link(href=assetPath('main.css') rel="stylesheet")
     meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
   body.d-flex.flex-column.min-vh-100
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light.mb-3
+    nav.navbar.navbar-expand-md.navbar-dark.top.bg-dark
       .container-fluid
         a.navbar-brand(href=route('root'))= t('appName')
         button.navbar-toggler(data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent")
@@ -38,5 +38,5 @@ html(lang="en")
       block content
 
     footer
-      .container.my-5.pt-4.border-top
+      .container-fluid.my-5.pt-4.border-top
         a(target="_blank" href="https://ru.hexlet.io") Hexlet

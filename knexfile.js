@@ -14,6 +14,7 @@ export const development = {
   connection: {
     filename: './database.sqlite',
   },
+  debug: true,
   useNullAsDefault: true,
   migrations,
 };
