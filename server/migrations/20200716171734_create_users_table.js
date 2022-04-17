@@ -9,11 +9,6 @@ export const up = (knex) => (
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table.timestamp('updated_at').defaultTo(knex.fn.now());
   })
-  .then(() => {
-    return knex("payment_paypal_status").insert([
-      { email: "Aawdwa@.ru" },
-    ])
-  })
 );
 
 export const down = (knex) => knex.schema.dropTable('users');

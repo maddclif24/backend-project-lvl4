@@ -1,10 +1,9 @@
 extends ../layouts/application.pug
 
-block header
-  = t('views.session.new.signIn')
 
 block content
   +formFor()(action=route('session') method='post')
+    h1.h3.mb-3.fw-normal= t('views.session.new.signIn')
     +input(signInForm, 'email', errors)(type="text")
     +input(signInForm, 'password')(type="password")
     +submit(signInForm)(value=t('views.session.new.submit'))

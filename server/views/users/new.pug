@@ -1,10 +1,9 @@
 extends ../layouts/application.pug
 
-block header
-  = t('views.users.new.signUp')
 
 block content
   +formFor()(action=route('users') method='post')
+    h1.h3.mb-3.fw-normal= t('views.users.new.signUp')
     +input(user, 'firstName', errors)(type="text")
     +input(user, 'lastName', errors)(type="text")
     +input(user, 'email', errors)(type="email")

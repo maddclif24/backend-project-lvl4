@@ -2,6 +2,8 @@
 
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
+// import HtmlWebpackPlugin from 'html-webpack-plugin';
+
 const mode = process.env.NODE_ENV || 'development';
 
 export default {
@@ -14,5 +16,6 @@ export default {
       },
     ],
   },
-  plugins: [new MiniCssExtractPlugin()],
+  plugins: [
+    new MiniCssExtractPlugin()],
 };

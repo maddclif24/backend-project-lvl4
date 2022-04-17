@@ -7,7 +7,7 @@ export default {
       session: {
         create: {
           success: 'Вы залогинены',
-          error: 'Неправильный емейл или пароль',
+          error: 'Неправильный email или пароль',
         },
         delete: {
           success: 'Вы разлогинены',
