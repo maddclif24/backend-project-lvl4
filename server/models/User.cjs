@@ -10,6 +10,10 @@ module.exports = class User extends unique(BaseModel) {
     return 'users';
   }
 
+  static get virtualAttributes() {
+    return ['fullName'];
+  }
+
   static get jsonSchema() {
     return {
       type: 'object',
@@ -22,6 +26,10 @@ module.exports = class User extends unique(BaseModel) {
         password: { type: 'string', minLength: 3 },
       },
     };
+  }
+
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`;
   }
 
   set password(value) {
