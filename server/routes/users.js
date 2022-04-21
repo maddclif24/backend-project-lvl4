@@ -13,15 +13,29 @@ export default (app) => {
       const user = new app.objection.models.user();
       reply.render('users/new', { user });
     })
+    .patch('/users/:id', async (req, reply) => {
+      try {
+        const validUser = await app.objection.models.user.fromJson(req.body.data);
+        await app.objection.models.user.query().update(validUser).where('id', req.params.id);
+        reply.redirect(app.reverse('/users'));
+      } catch (error) {
+        console.log(error);
+      }
+      return reply;
+    })
+    .get('/users/:id/edit', async (req, reply) => {
+      const user = await app.objection.models.user.query().findById(req.params.id);
+      console.log(user);
+      reply.render('users/edit', { user });
+      return reply;
+    })
     .post('/users', async (req, reply) => {
       const user = new app.objection.models.user();
       user.$set(req.body.data);
-      console.log(user);
-      console.log('----------------------------');
 
       try {
         const validUser = await app.objection.models.user.fromJson(req.body.data);
-        console.log(validUser);
+        // console.log(validUser);
         await app.objection.models.user.query().insert(validUser);
         req.flash('info', i18next.t('flash.users.create.success'));
         reply.redirect(app.reverse('root'));

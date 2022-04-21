@@ -45,6 +45,10 @@ export default {
           submit: 'Сохранить',
           signUp: 'Регистрация',
         },
+        edit: {
+          title: 'Изменение пользователя',
+          submit: 'Изменить',
+        },
       },
       welcome: {
         index: {
