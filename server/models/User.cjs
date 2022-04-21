@@ -10,6 +10,14 @@ module.exports = class User extends unique(BaseModel) {
     return 'users';
   }
 
+  static get virtualAttributes() {
+    return ['fullName'];
+  }
+
+  fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+
   static get jsonSchema() {
     return {
       type: 'object',

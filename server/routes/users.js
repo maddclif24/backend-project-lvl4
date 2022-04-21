@@ -1,6 +1,6 @@
 // @ts-check
 
-import i18next from 'i18next';
+import i18next, { use } from 'i18next';
 
 export default (app) => {
   app
@@ -16,9 +16,12 @@ export default (app) => {
     .post('/users', async (req, reply) => {
       const user = new app.objection.models.user();
       user.$set(req.body.data);
+      console.log(user);
+      console.log('----------------------------');
 
       try {
         const validUser = await app.objection.models.user.fromJson(req.body.data);
+        console.log(validUser);
         await app.objection.models.user.query().insert(validUser);
         req.flash('info', i18next.t('flash.users.create.success'));
         reply.redirect(app.reverse('root'));
