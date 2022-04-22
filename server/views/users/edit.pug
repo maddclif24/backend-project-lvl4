@@ -2,10 +2,11 @@ extends ../layouts/application.pug
 
 
 block content
-  +formFor()(action=route(`users/${user.id}`) method='post')
+  +formFor()(action=route('userEdit', { id: user.id }) method='post')
     h1.h3.mb-3.fw-normal= t('views.users.edit.title')
     +input(user, 'firstName', errors)(type="text")
     +input(user, 'lastName', errors)(type="text")
     +input(user, 'email', errors)(type="email")
     +input(user, 'password', errors)(type="password")
+    input(name='_method' type='hidden' value='patch')
     +submit(user)(value=t('views.users.edit.submit'))
