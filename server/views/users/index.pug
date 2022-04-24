@@ -17,7 +17,7 @@ block content
           td= formatDate(user.createdAt)
           td.d-flex.flex-wrap
             a.btn.btn-primary.me-1(href=`/users/${user.id}/edit`) Изменить
-            form(action=`/users/${user.id}/edit` method='post')
+            form(action=route('userDelete', { id: user.id }) method='post')
               input(name='_method' type='hidden' value='delete')
               input.btn.btn-danger(type='submit' value='Удалить')
 
