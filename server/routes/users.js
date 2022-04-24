@@ -15,12 +15,16 @@ export default (app) => {
     })
     .get('/users/:id/edit', async (req, reply) => {
       const user = await app.objection.models.user.query().findById(req.params.id);
-      reply.render('users/edit', { user });
+      try {
+        await app.authenticate(req);
+        reply.render('users/edit', { user });
+      } catch ({ data }) {
+        reply.redirect(app.reverse('root'));
+      }
       return reply;
     })
     .patch('/users/:id', { name: 'userEdit' }, async (req, reply) => {
       const users = await app.objection.models.user.query();
-
       try {
         const { params, body } = req;
         const user = await app.objection.models.user.query().findById(params.id);
@@ -29,6 +33,21 @@ export default (app) => {
         reply.redirect(app.reverse('users'));
       } catch ({ data }) {
         req.flash('error', i18next.t('flash.users.edit.error'));
+        reply.render('users/index', { users });
+      }
+      return reply;
+    })
+    .delete('/users/:id', { name: 'userDelete' }, async (req, reply) => {
+      const users = await app.objection.models.user.query();
+      try {
+        await app.authenticate(req);
+        const { params } = req;
+        const user = await app.objection.models.user.query().findById(params.id);
+        await user.$query().delete().where(user);
+        req.flash('success', i18next.t('flash.users.delete.success'));
+        reply.redirect(app.reverse('users'));
+      } catch ({ data }) {
+        req.flash('error', i18next.t('flash.users.delete.error'));
         reply.render('users/index', { users });
       }
       return reply;
