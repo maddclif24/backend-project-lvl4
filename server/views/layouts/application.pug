@@ -21,13 +21,13 @@ html(lang="en")
           ul.navbar-nav
             if isAuthenticated()
               li.nav-item
-                +buttonTo('delete')(class="btn nav-link" value=t('layouts.application.statuses'))
+                a.nav-link(href=route('statuses'))= value=t('layouts.application.statuses')
               li.nav-item
                 +buttonTo('delete')(class="btn nav-link" value=t('layouts.application.tags'))
               li.nav-item
                 +buttonTo('delete')(class="btn nav-link" value=t('layouts.application.tasks'))
               li.nav-item
-                +buttonTo(route('session'), 'delete')(class="btn nav-link 1234" value=t('layouts.application.signOut'))
+                +buttonTo(route('session'), 'delete')(class="btn nav-link" value=t('layouts.application.signOut'))
             else
               li.nav-item
                 a.nav-link(href=route('newSession'))= t('layouts.application.signIn')

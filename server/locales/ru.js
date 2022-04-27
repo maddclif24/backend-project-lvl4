@@ -28,6 +28,12 @@ export default {
         },
       },
       authError: 'Доступ запрещён! Пожалуйста, авторизируйтесь.',
+      statuses: {
+        create: {
+          success: 'Статус создан',
+          error: 'Не удалось создать статус',
+        },
+      },
     },
     layouts: {
       application: {
@@ -59,6 +65,16 @@ export default {
         edit: {
           title: 'Изменение пользователя',
           submit: 'Изменить',
+        },
+      },
+      statuses: {
+        id: 'ID',
+        name: 'Наименование',
+        createdAt: 'Дата создания',
+        edit: {
+          title: 'Создание статуса',
+          inputName: 'Наименование',
+          submit: 'Создать статус',
         },
       },
       welcome: {

@@ -1,0 +1,21 @@
+extends ../layouts/application.pug
+
+block content
+  a.btn.btn-primary(href='/statuses/new') Создать статус
+  table.table.table-striped.mt-5
+    thead
+      tr
+        th= t('views.statuses.id')
+        th= t('views.statuses.name')
+        th= t('views.users.createdAt')
+    tbody
+      each status in statuses
+        tr
+          td= status.id
+          td= status.name
+          td= formatDate(status.createdAt)
+          td.d-flex.flex-wrap
+            a.btn.btn-primary.me-1(href=`/users/${status.id}/edit`) Изменить
+            form(action method='post')
+              input(name='_method' type='hidden' value='delete')
+              input.btn.btn-danger(type='submit' value='Удалить')

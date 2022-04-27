@@ -43,7 +43,8 @@ export default (app) => {
         await app.authenticate(req);
         const { params } = req;
         const user = await app.objection.models.user.query().findById(params.id);
-        await user.$query().delete().where(user);
+        await user.$query().deleteById(params.id);
+        req.logOut();
         req.flash('success', i18next.t('flash.users.delete.success'));
         reply.redirect(app.reverse('users'));
       } catch ({ data }) {

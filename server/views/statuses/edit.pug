@@ -1,0 +1,10 @@
+extends ../layouts/application.pug
+
+
+
+block content
+  +formFor()(action=route('statusEdit') method='post')
+    h1.h3.mb-3.fw-normal=t('views.statuses.edit.title')
+    +input(status, 'name', errors)(type="text")
+    input(name='_method' type='hidden' value='post')
+    +submit(status)(value=t('views.statuses.edit.submit'))
