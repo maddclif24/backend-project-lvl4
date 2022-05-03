@@ -15,7 +15,7 @@ block content
           td= status.name
           td= formatDate(status.createdAt)
           td.d-flex.flex-wrap
-            a.btn.btn-primary.me-1(href=`/users/${status.id}/edit`) Изменить
-            form(action method='post')
+            a.btn.btn-primary.me-1(href=`/statuses/${status.id}/edit`) Изменить
+            form(action=route('deleteStatus', { id: status.id }) method='post')
               input(name='_method' type='hidden' value='delete')
               input.btn.btn-danger(type='submit' value='Удалить')
