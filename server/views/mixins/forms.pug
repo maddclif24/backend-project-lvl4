@@ -31,3 +31,23 @@ mixin buttonTo(action, method)
   form(action=action, method="post")
     input(name="_method" type="hidden" value=method)
     input(type='submit')&attributes(attributes)
+
+mixin textArea
+  .mb-3
+  label(for='data_description') Описание
+  textarea#data_description.form-control(name='data[description]' rows='3')
+
+// Проблема агрегации данных связяна с полем name!!!
+mixin divStatus(data, name, propertyName)
+  .mb-3
+  label(for='data_statusId')=name
+  select#data_statusId.form-control(name='data[statusId]')
+    each el, i in data
+      option(value=el.id)= el[propertyName]
+
+mixin divExecutor(data, name, propertyName)
+  .mb-3
+  label(for='data_executorId')=name
+  select#data_statusId.form-control(name='data[executorId]')
+    each el, i in data
+      option(value=el.id)= el[propertyName]

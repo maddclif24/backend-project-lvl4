@@ -20,6 +20,7 @@ export default (app) => {
       status.$set(body.data);
       try {
         const createStatus = await app.objection.models.status.fromJson(body.data);
+        console.log(createStatus);
         await app.objection.models.status.query().insert(createStatus);
         req.flash('info', i18next.t('flash.statuses.create.success'));
         reply.redirect(app.reverse('statuses'));
@@ -43,6 +44,7 @@ export default (app) => {
       try {
         const { params, body } = req;
         const status = await app.objection.models.status.query().findById(params.id);
+        console.log(status);
         await status.$query().patch(body.data).findById(params.id);
         req.flash('success', i18next.t('flash.statuses.edit.success'));
         reply.redirect(app.reverse('statuses'));

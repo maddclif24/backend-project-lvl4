@@ -92,6 +92,14 @@ export default {
           more: 'Узнать Больше',
         },
       },
+      tasks: {
+        id: 'ID',
+        description: 'Наименование',
+        status: 'Статус',
+        author: 'Автор',
+        executor: 'Исполнитель',
+        createdAt: 'Дата создания',
+      },
     },
   },
 };

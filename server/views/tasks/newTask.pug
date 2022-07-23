@@ -1,0 +1,12 @@
+extends ../layouts/application.pug
+
+block content
+  +formFor()(action=route('createNewTask') method='post')
+    h1.h3.mb-3.fw-normal='Создание задачи'
+    +input(task, 'name', errors)(type="text")
+    +textArea
+    +divStatus(statuses, 'Статус', 'name')
+    // +divTasks(users, 'Исполнитель', 'fullName')
+    +divExecutor(users, 'Исполнитель', 'fullName')
+    // +divTasks([], 'Метки')
+    +submit(task)(value='Создать')

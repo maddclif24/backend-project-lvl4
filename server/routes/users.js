@@ -17,6 +17,7 @@ export default (app) => {
       const user = await app.objection.models.user.query().findById(req.params.id);
       try {
         await app.authenticate(req);
+        console.log(req);
         reply.render('users/edit', { user });
       } catch ({ data }) {
         reply.redirect(app.reverse('root'));

@@ -1,0 +1,27 @@
+extends ../layouts/application.pug
+
+block content
+  a.btn.btn-primary(href='/tasks/new') Создать Задачу
+  table.table.table-striped.mt-5
+    thead
+      tr
+        th= t('views.tasks.id')
+        th= t('views.tasks.description')
+        th= t('views.tasks.status')        
+        th= t('views.tasks.author')
+        th= t('views.tasks.executor')
+        th= t('views.tasks.createdAt')                
+    tbody
+      each task in tasks
+        tr
+          td= task.id
+          td= task.name
+          td= task.name
+          td= task.name
+          td= task.name
+          td= formatDate(task.createdAt)
+          td.d-flex.flex-wrap
+            a.btn.btn-primary.me-1(href=`/tasks/${task.id}/edit`) Изменить
+            form(action=route('deleteStatus', { id: task.id }) method='post')
+              input(name='_method' type='hidden' value='delete')
+              input.btn.btn-danger(type='submit' value='Удалить')
