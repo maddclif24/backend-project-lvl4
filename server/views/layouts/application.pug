@@ -23,7 +23,8 @@ html(lang="en")
               li.nav-item
                 a.nav-link(href=route('statuses'))= value=t('layouts.application.statuses')
               li.nav-item
-                +buttonTo('delete')(class="btn nav-link" value=t('layouts.application.tags'))
+                a.nav-link(href=route('labels'))= value=t('layouts.application.tags')
+                // +buttonTo('delete')(class="btn nav-link" value=t('layouts.application.tags'))
               li.nav-item
                 a.nav-link(href=route('tasks'))= value=t('layouts.application.tasks')
               li.nav-item

@@ -8,6 +8,7 @@ export const up = (knex) => (
     table.string('status_id');
     table.integer('creator_id');
     table.string('executor_id');
+    table.varchar('labels');
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table.timestamp('updated_at').defaultTo(knex.fn.now());
   })

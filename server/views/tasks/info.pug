@@ -1,0 +1,26 @@
+extends ../layouts/application.pug
+
+block content
+  .container.wrapper.flex-grow-1
+    h1.display-4.fw-bold.mt-4=task.name
+    .row.mt-5.p-5.shadow.bg-white
+      .col-12.col-md-8.order-2.order-md-1
+        .lead.fw-normal.mb-4=task.description
+      .col-12.col-md-4.border-start.px-3.order-1.order-md-2.mb-3.mb-md-0
+        .mb-2
+          span.me-1.badge.bg-danger.text-white=status.name
+          span.me-1.badge.bg-info.text-white Метка 1
+        .d-flex.flex-wrap.mb-3
+          span.text-muted.me-2 Автор
+          span=creator.fullName
+        .d-flex.flex-wrap.mb-3
+          span.text-muted.me-2 Исполнитель
+          span=executor.fullName
+        .d-flex.flex-wrap.mb-3
+          span.text-muted.me-2 Дата создания
+          span=task.createdAt
+        .d-flex.flex-wrap
+            a.btn.btn-primary.me-1(href=`/tasks/${task.id}/edit`) Изменить
+            form(action=route('deleteTask', { id: task.id }) method='post')
+              input(name='_method' type='hidden' value='delete')
+              input.btn.btn-danger(type='submit' value='Удалить')

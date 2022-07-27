@@ -1,0 +1,12 @@
+extends ../layouts/application.pug
+
+block content
+  +formFor()(action=route('editTask', { id: task.id }) method='post')
+    h1.h3.mb-3.fw-normal=t('views.statuses.edit.title')
+    +input(task, 'name', errors)(type="text")
+    +textArea(task.description)
+    +divStatus(statuses, 'Статус', 'name', id)
+    +divExecutor(executors, 'Исполнитель', 'fullName', currentExecotur.id)
+    //LABELS
+    input(name='_method' type='hidden' value='patch')
+    +submit(status)(value=t('views.statuses.edit.submit'))

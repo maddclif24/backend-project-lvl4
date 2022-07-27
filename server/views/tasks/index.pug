@@ -12,16 +12,17 @@ block content
         th= t('views.tasks.executor')
         th= t('views.tasks.createdAt')                
     tbody
-      each task in tasks
+      each task in dataTasks
         tr
           td= task.id
-          td= task.name
-          td= task.name
-          td= task.name
-          td= task.name
+          td
+            a(href=`/tasks/${task.id}`)=task.name
+          td= task.statusId
+          td= task.creatorId
+          td= task.executorId
           td= formatDate(task.createdAt)
           td.d-flex.flex-wrap
             a.btn.btn-primary.me-1(href=`/tasks/${task.id}/edit`) Изменить
-            form(action=route('deleteStatus', { id: task.id }) method='post')
+            form(action=route('deleteTask', { id: task.id }) method='post')
               input(name='_method' type='hidden' value='delete')
               input.btn.btn-danger(type='submit' value='Удалить')

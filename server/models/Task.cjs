@@ -28,8 +28,8 @@ module.exports = class Task extends BaseModel {
   static get relationMappings() {
     return {
       status: {
-        relation: BaseModel.HasManyRelation,
-        modelClass: path.join(__dirname, 'Status'),
+        relation: BaseModel.BelongsToOneRelation,
+        modelClass: 'Status.cjs',
         join: {
           from: 'tasks.status_id',
           to: 'statuses.id',
@@ -37,10 +37,14 @@ module.exports = class Task extends BaseModel {
       },
       creator: {
         relation: BaseModel.HasManyRelation,
-        modelClass: path.join(__dirname, 'User'),
+        modelClass: 'User.cjs',
         join: {
           from: 'tasks.creator_id',
           to: 'users.id',
+        },
+        label: {
+          relation: BaseModel.ManyToManyRelation,
+          modelClass: 'Label.cjs',
         },
       },
     };
