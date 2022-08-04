@@ -2,26 +2,11 @@
 
 import i18next, { use } from 'i18next';
 import _ from 'lodash';
-/*
-  22:21:34 web.1        |    Task {
-22:21:34 web.1        |      id: 1,
-22:21:34 web.1        |      name: 'Задача 1',
-22:21:34 web.1        |      description: '123',
-22:21:34 web.1        |      statusId: '1',
-22:21:34 web.1        |      creatorId: 1,
-22:21:34 web.1        |      executorId: '1',
-22:21:34 web.1        |      createdAt: '2022-07-22 09:26:54',
-22:21:34 web.1        |      updatedAt: '2022-07-22 09:26:54'
-22:21:34 web.1        |    }
 
-*/
 export default (app) => {
   app
     .get('/tasks', { name: 'tasks' }, async (req, reply) => {
       const tasks = await app.objection.models.task.query();
-      console.log(tasks);
-      // const status = await app.objection.models.status.query().findById('1');
-      // const creator = await app.objection.models.user.query().findById('1');
       const dataTasks = await Promise.all(tasks.map(async (item) => {
         const status = await app.objection.models.status.query().findById(item.statusId);
         const creator = await app.objection.models.user.query().findById(item.creatorId);
@@ -87,10 +72,13 @@ export default (app) => {
 
       const { id } = await app.objection.models.status.query().findById(task.statusId);
       const currentExecotur = await app.objection.models.user.query().findById(task.executorId);
+      const labelsIds = task.labels ? task.labels.split(',') : [];
+      const labels = await app.objection.models.label.query();
+      const currentLabels = await app.objection.models.label.query().findByIds(labelsIds);
 
-      console.log(task, creator, executors, statuses, id, currentExecotur.id);
+      // console.log(task, labels, currentLabels);
       reply.render('tasks/edit', {
-        task, creator, executors, statuses, id, currentExecotur,
+        task, creator, executors, statuses, id, currentExecotur, labels, currentLabels,
       });
       return reply;
     })
@@ -101,10 +89,14 @@ export default (app) => {
         const task = await app.objection.models.task.query().findById(params.id);
         console.log(task, body.data);
         await task.$query().patch(body.data).findById(params.id);
-        req.flash('success', i18next.t('flash.statuses.edit.success'));
+        req.flash('success', i18next.t('flash.tasks.edit.success'));
         reply.redirect(app.reverse('tasks'));
-      } catch (error) {
-        console.log(error);
+      } catch ({ data }) {
+        // !!!Исправить фронт ошибок!!!
+        req.flash('error', i18next.t('flash.tasks.edit.error'));
+        reply.render('tasks/index', { tasks });
+        // console.log(data);
+        // console.log(error);
       }
       return reply;
     })
@@ -114,7 +106,7 @@ export default (app) => {
       const creator = await app.objection.models.user.query().findById(task.creatorId);
       if (userId === creator.id) {
         await task.$query().deleteById(req.params.id);
-        req.flash('success', i18next.t('flash.statuses.delete.success'));
+        req.flash('success', i18next.t('flash.tasks.delete.success'));
         reply.redirect(app.reverse('tasks'));
       } else throw new Error('Вы не можете удалить эту задачу');
       return reply;
@@ -130,7 +122,7 @@ export default (app) => {
         const createTask = await app.objection.models.task.fromJson(dataTask);
         // console.log(createTask);
         await app.objection.models.task.query().insert(createTask);
-        req.flash('info', i18next.t('flash.statuses.create.success'));
+        req.flash('info', i18next.t('flash.tasks.create.success'));
         reply.redirect(app.reverse('tasks'));
       } catch (e) {
         // req.flash('error', i18next.t('flash.statuses.create.error'));

@@ -22,10 +22,10 @@ export default (app) => {
         const createLabel = await app.objection.models.label.fromJson(body.data);
         console.log(createLabel);
         await app.objection.models.label.query().insert(createLabel);
-        req.flash('info', i18next.t('flash.statuses.create.success'));// !!!!!!!!!!!
+        req.flash('info', i18next.t('flash.labels.create.success'));// !!!!!!!!!!!
         reply.redirect(app.reverse('labels'));
       } catch ({ data }) {
-        req.flash('error', i18next.t('flash.statuses.create.error'));// !!!!!!!!!!1
+        req.flash('error', i18next.t('flash.labels.create.error'));// !!!!!!!!!!1
         reply.render('statuses/newStatus', { label, errors: data });// !!!!!!!!!!!
       }
       return reply;
@@ -46,10 +46,10 @@ export default (app) => {
         const label = await app.objection.models.label.query().findById(params.id);
         console.log(label);
         await label.$query().patch(body.data).findById(params.id);
-        req.flash('success', i18next.t('flash.statuses.edit.success'));
+        req.flash('success', i18next.t('flash.labels.edit.success'));
         reply.redirect(app.reverse('labels'));
       } catch ({ data }) {
-        req.flash('error', i18next.t('flash.statuses.edit.error'));
+        req.flash('error', i18next.t('flash.labels.edit.error'));
         reply.render('statuses/index', { labels });
       }
       return reply;
@@ -60,10 +60,10 @@ export default (app) => {
         const { params } = req;
         const label = await app.objection.models.label.query().findById(params.id);
         await label.$query().deleteById(params.id);
-        req.flash('success', i18next.t('flash.statuses.delete.success'));
+        req.flash('success', i18next.t('flash.labels.delete.success'));
         reply.redirect(app.reverse('labels'));
       } catch ({ data }) {
-        req.flash('error', i18next.t('flash.statuses.delete.error'));
+        req.flash('error', i18next.t('flash.labels.delete.error'));
         reply.render('users/index', { labels });
       }
       return reply;
