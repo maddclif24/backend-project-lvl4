@@ -42,6 +42,34 @@ export default {
           error: 'Не удалось удалить статус',
         },
       },
+      labels: {
+        create: {
+          success: 'Метка создана',
+          error: 'Не удалось создать метку',
+        },
+        edit: {
+          success: 'Метка изменена',
+          error: 'Не удалось изменить метку',
+        },
+        delete: {
+          success: 'Метка удалена',
+          error: 'Не удалось удалить метку',
+        },
+      },
+      tasks: {
+        create: {
+          success: 'Задача создана',
+          error: 'Не удалось создать задачу',
+        },
+        edit: {
+          success: 'Задача изменена',
+          error: 'Не удалось изменить задачу',
+        },
+        delete: {
+          success: 'Задача удалена',
+          error: 'Не удалось удалить задачу',
+        },
+      },
     },
     layouts: {
       application: {
@@ -99,6 +127,16 @@ export default {
         author: 'Автор',
         executor: 'Исполнитель',
         createdAt: 'Дата создания',
+      },
+      labels: {
+        id: 'ID',
+        name: 'Наименование',
+        createdAt: 'Дата создания',
+        edit: {
+          title: 'Создание Метки',
+          inputName: 'Наименование',
+          submit: 'Создать метку',
+        },
       },
     },
   },
