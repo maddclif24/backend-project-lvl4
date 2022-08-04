@@ -1,6 +1,7 @@
 // @ts-check
 
 import i18next, { use } from 'i18next';
+import _ from 'lodash';
 /*
   22:21:34 web.1        |    Task {
 22:21:34 web.1        |      id: 1,
@@ -54,11 +55,27 @@ export default (app) => {
       const creator = await app.objection.models.user.query().findById(task.creatorId);
       const executor = await app.objection.models.user.query().findById(task.executorId);
       const status = await app.objection.models.status.query().findById(task.statusId);
-      const label = await app.objection.models.label.query();
-      console.log(task.labels.split(','));
-      console.log(task, label);
+      const labelsIds = task.labels.split(',');
+      const labels = await app.objection.models.label.query().findByIds(labelsIds);
+
+      const labelsColors = [
+        { background: 'bg-primary', text: 'text-white' },
+        { background: 'bg-secondary', text: 'text-white' },
+        { background: 'bg-success', text: 'text-white' },
+        { background: 'bg-warning', text: 'text-black' },
+        { background: 'bg-info', text: 'text-black' },
+        { background: 'bg-light', text: 'text-black' },
+        { background: 'bg-dark', text: 'text-white' },
+      ];
+
+      const coloredLabels = labels.map(({ name }) => {
+        const colorIndex = _.random(0, labelsColors.length - 1);
+        const color = labelsColors[colorIndex];
+        return { name, color };
+      });
+
       reply.render('tasks/info', {
-        task, creator, executor, status,
+        task, creator, executor, status, coloredLabels,
       });
       return reply;
     })
