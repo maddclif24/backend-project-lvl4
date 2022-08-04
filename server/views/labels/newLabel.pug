@@ -2,6 +2,6 @@ extends ../layouts/application.pug
 
 block content
   +formFor()(action=route('createNewLabel') method='post')
-    h1.h3.mb-3.fw-normal=t('views.statuses.edit.title')
+    h1.h3.mb-3.fw-normal=t('views.labels.edit.title')
     +input(status, 'name', errors)(type="text")
-    +submit(status)(value=t('views.statuses.edit.submit'))
+    +submit(status)(value=t('views.labels.edit.submit'))

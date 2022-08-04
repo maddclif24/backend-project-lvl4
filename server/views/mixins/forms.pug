@@ -37,8 +37,9 @@ mixin textArea(data = null)
   label(for='data_description') Описание
   textarea#data_description.form-control(name='data[description]' rows='3')= data
 
-// Проблема агрегации данных связяна с полем name!!!
 mixin divStatus(data, name, propertyName, SelectedId = null)
+  - propertyErrors = _.get(errors, propertyName)
+  - classLine = 'form-control' + (_.isEmpty(propertyErrors) ? '' : ' is-invalid')
   .mb-3
   label(for='data_statusId')=name
   select#data_statusId.form-control(name='data[statusId]')
@@ -52,9 +53,9 @@ mixin divExecutor(data, name, propertyName, SelectedId = null)
     each el, i in data
       option(value=el.id selected= SelectedId == el.id)= el[propertyName]
 
-mixin divLabel(data, name, propertyName, id = null)
+mixin divLabel(data, name, propertyName, SelectedIds = [])
   .mb-3
   label(for='data_labels')=name
   select#data_labels.form-control(name='data[labels]' multiple='multiple')
     each el, i in data
-      option(value=el.id)= el[propertyName]
+      option(value=el.id selected= (SelectedIds.find(({ id }) => id == el.id) ? true : false))= el[propertyName]
