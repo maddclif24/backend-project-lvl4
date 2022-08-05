@@ -1,7 +1,7 @@
 // @ts-check
 
 // const objectionUnique = require('objection-unique');
-const path = require('path');
+// const path = require('path');
 const BaseModel = require('./BaseModel.cjs');
 // const unique = objectionUnique({ fields: ['name'] });
 
@@ -21,6 +21,7 @@ module.exports = class Task extends BaseModel {
         statusId: { type: 'string' },
         creatorId: { type: 'integer' },
         executorId: { type: 'string' },
+        labels: { type: 'array' },
       },
     };
   }
