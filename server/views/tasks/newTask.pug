@@ -5,7 +5,7 @@ block content
     h1.h3.mb-3.fw-normal='Создание задачи'
     +input(task, 'name', errors)(type="text")
     +textArea
-    +divStatus(statuses, 'Статус', 'name')
+    +divStatus(statuses, 'Статус', 'name', errors)
     // +divTasks(users, 'Исполнитель', 'fullName')
     +divExecutor(users, 'Исполнитель', 'fullName')
     +divLabel(labels, 'Метки', 'name')

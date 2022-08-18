@@ -12,7 +12,7 @@ block content
         th= t('views.tasks.executor')
         th= t('views.tasks.createdAt')                
     tbody
-      each task in dataTasks
+      each task in dataTasks ? dataTasks : []
         tr
           td= task.id
           td

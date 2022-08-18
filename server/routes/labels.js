@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 // @ts-check
 
 import i18next, { use } from 'i18next';
@@ -25,8 +26,10 @@ export default (app) => {
         req.flash('info', i18next.t('flash.labels.create.success'));// !!!!!!!!!!!
         reply.redirect(app.reverse('labels'));
       } catch ({ data }) {
+        console.log(data);
         req.flash('error', i18next.t('flash.labels.create.error'));// !!!!!!!!!!1
-        reply.render('statuses/newStatus', { label, errors: data });// !!!!!!!!!!!
+        console.log({ label, errors: data });
+        reply.render('labels/newLabel', { label, errors: data });// !!!!!!!!!!!
       }
       return reply;
     })
@@ -58,13 +61,24 @@ export default (app) => {
       const labels = await app.objection.models.status.query();
       try {
         const { params } = req;
-        const label = await app.objection.models.label.query().findById(params.id);
-        await label.$query().deleteById(params.id);
-        req.flash('success', i18next.t('flash.labels.delete.success'));
-        reply.redirect(app.reverse('labels'));
-      } catch ({ data }) {
-        req.flash('error', i18next.t('flash.labels.delete.error'));
-        reply.render('users/index', { labels });
+        const label = await app.objection.models.label.query().findById(params.id).withGraphFetched('label');
+        const tasks = await app.objection.models.task.query();
+        console.log(label);
+        // Не забыть поправить isRelationWithTask (смотреть sqlite3 в поле labels, проблема со строками)
+
+
+        // const taskTest = await app.objection.models.task;
+        // console.log(taskTest);
+        // const isRelationWithTask = await app.objection.models.task.query().findOne({ labels: `[${label.id}]` });
+        // console.log(isRelationWithTask);
+        // console.log(label, tasks, '!!!!!!!!!!!!!!!!!!!!!!', isRelationWithTask);
+        // await label.$query().deleteById(params.id);
+        // req.flash('success', i18next.t('flash.labels.delete.success'));
+        // reply.redirect(app.reverse('labels'));
+      } catch (error) {
+        console.log(error);
+        // req.flash('error', i18next.t('flash.labels.delete.error'));
+        // reply.render('users/index', { labels });
       }
       return reply;
     });
