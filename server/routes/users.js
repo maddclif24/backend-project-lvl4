@@ -40,14 +40,26 @@ export default (app) => {
     })
     .delete('/users/:id', { name: 'userDelete' }, async (req, reply) => {
       const users = await app.objection.models.user.query();
+      console.log(users);
       try {
         await app.authenticate(req);
         const { params } = req;
         const user = await app.objection.models.user.query().findById(params.id);
-        await user.$query().deleteById(params.id);
-        req.logOut();
-        req.flash('success', i18next.t('flash.users.delete.success'));
-        reply.redirect(app.reverse('users'));
+        const tasks = await app.objection.models.task.query();
+        const isRelationWithTask = await app.objection.models.task.query().findOne(
+          { creatorId: user.id },
+        );
+        if (isRelationWithTask) {
+          console.log('Удалить не можем');
+          req.flash('error', i18next.t('flash.users.delete.error'));
+          reply.render('users/index', { users });
+        } else {
+          await user.$query().deleteById(params.id);
+          req.logOut();
+          console.log('Удалить можем');
+          req.flash('success', i18next.t('flash.users.delete.success'));
+          reply.redirect(app.reverse('users'));
+        }
       } catch ({ data }) {
         req.flash('error', i18next.t('flash.users.delete.error'));
         reply.render('users/index', { users });
@@ -57,7 +69,6 @@ export default (app) => {
     .post('/users', async (req, reply) => {
       const user = new app.objection.models.user();
       user.$set(req.body.data);
-
       try {
         const validUser = await app.objection.models.user.fromJson(req.body.data);
         await app.objection.models.user.query().insert(validUser);

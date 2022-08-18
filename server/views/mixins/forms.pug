@@ -37,25 +37,33 @@ mixin textArea(data = null)
   label(for='data_description') Описание
   textarea#data_description.form-control(name='data[description]' rows='3')= data
 
-mixin divStatus(data, name, propertyName, SelectedId = null)
+mixin divStatus(data, name, propertyName, SelectedId = null, errors = {})
   - propertyErrors = _.get(errors, propertyName)
   - classLine = 'form-control' + (_.isEmpty(propertyErrors) ? '' : ' is-invalid')
   .mb-3
   label(for='data_statusId')=name
-  select#data_statusId.form-control(name='data[statusId]')
-    each el, i in data
+  select(
+    id= '#data_statusId'
+    name='data[statusId]'
+    class=classLine
+    )
+    each el, i in data ? data : []
+      if i === 0
+        option(value="") 
       option(value=el.id selected= SelectedId == el.id)= el[propertyName]
 
 mixin divExecutor(data, name, propertyName, SelectedId = null)
   .mb-3
   label(for='data_executorId')=name
   select#data_statusId.form-control(name='data[executorId]')
-    each el, i in data
+    each el, i in data ? data : []
+      if i === 0
+        option(value="")     
       option(value=el.id selected= SelectedId == el.id)= el[propertyName]
 
 mixin divLabel(data, name, propertyName, SelectedIds = [])
   .mb-3
   label(for='data_labels')=name
   select#data_labels.form-control(name='data[labels]' multiple='multiple')
-    each el, i in data
+    each el, i in data ? data : []  
       option(value=el.id selected= (SelectedIds.find(({ id }) => id == el.id) ? true : false))= el[propertyName]

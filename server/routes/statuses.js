@@ -59,12 +59,18 @@ export default (app) => {
       try {
         const { params } = req;
         const status = await app.objection.models.status.query().findById(params.id);
-        await status.$query().deleteById(params.id);
-        req.flash('success', i18next.t('flash.statuses.delete.success'));
-        reply.redirect(app.reverse('users'));
+        const isRelationWithTask = await app.objection.models.task.query().findOne({ statusId: `${status.id}` });
+        if (isRelationWithTask) {
+          req.flash('error', i18next.t('flash.statuses.delete.error'));
+          reply.render('statuses/index', { statuses });
+        } else {
+          await status.$query().deleteById(params.id);
+          req.flash('success', i18next.t('flash.statuses.delete.success'));
+          reply.redirect(app.reverse('statuses'));
+        }
       } catch ({ data }) {
         req.flash('error', i18next.t('flash.statuses.delete.error'));
-        reply.render('users/index', { statuses });
+        reply.render('statuses/index', { statuses });
       }
       return reply;
     });

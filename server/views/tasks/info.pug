@@ -16,7 +16,7 @@ block content
           span=creator.fullName
         .d-flex.flex-wrap.mb-3
           span.text-muted.me-2 Исполнитель
-          span=executor.fullName
+          span=executor ? executor.fullName : null
         .d-flex.flex-wrap.mb-3
           span.text-muted.me-2 Дата создания
           span=task.createdAt
